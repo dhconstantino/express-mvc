@@ -30,11 +30,11 @@ Proyecto Base
     db.js
     package.json   
 
-La propuesta asume como controlador la carpeta ```routes``, en donde se han de definir las rutas o controladores o 
+La propuesta asume como controlador la carpeta ```routes```, en donde se han de definir las rutas o controladores o 
 actions. A continuación se detallan todos los directorios y archivos principales.
  
 - **bin/:** Contiene script de arranque ```www``` el cual inicializa la base de datos y el servidor de
-    websockets. Invocado vía ```npm start``
+    websockets. Invocado vía ```npm start```
 - **helpers/:** Código y funcionalidades que son compartidas por diferentes componentes de la aplicación.
 - **middlewares/:** Funciones que procesan las peticiones recibidas antes de ser delegadas al proceso de ruteo.
 - **models/:** Modelos de la lógica de negocio que proveen una interfaz de comunicación con la Base de Datos al 
@@ -65,6 +65,8 @@ actions. A continuación se detallan todos los directorios y archivos principale
 - [HectorCorrea.com: Personal site with MVC] (https://github.com/hectorcorrea/hectorcorrea.com)
 - [strongloop: ExpressJS MVC example] (https://github.com/strongloop/express/tree/master/examples/mvc)
 
-por [Daniel HConstantino](mailto:danielhconstantino@gmail.com)
+-------------------------------------------------------------
+
+[Daniel HConstantino](mailto:danielhconstantino@gmail.com)
 
 @dhconstantino
