@@ -3,12 +3,12 @@
  * Fecha:   04/06/15 17:22
  * Descripción: dao.js: Define operaciones básicas CRUD.
  */
-var Db = require('../db'),
-    dbname = Db.name();
-var urlDB = 'mongodb://' + Db.host() + ':' + Db.port() + '/' + Db.name();
+var Db = require('../db');
+var uri = Db.getURI();
+var dbname = uri.split('/')[3];
 var mongoclient;
 
-Db.connect(urlDB, function(err) {
+Db.connect(uri, function(err) {
     if(err) {
         console.log('[ERROR] Falló la conexión con la BD');
     }
@@ -22,7 +22,7 @@ exports.insert  = function(collection, document, done) {
         var db = mongo.db(dbname);
         db.collection(collection).insertOne(document, function(err) {
             if(err) {
-                console.log("[ERROR] No se pudo realizar la operación .insertOne()");
+                console.log('[ERROR] No se pudo realizar la operación .insertOne()');
                 done(err);
             }
             else {
@@ -32,20 +32,40 @@ exports.insert  = function(collection, document, done) {
     });
     mongoclient.close();
 };
+
 exports.find    = function(collection, query, done) {
     mongoclient.open(function(err, mongo) {
         var db = mongo.db(dbname);
         db.collection(collection).findOne(query, function(err, data) {
             if(err) {
-                console.log("[ERROR] No se pudo realizar la operación .findOne()");
-                done(err);
+                console.log('[ERROR] No se pudo realizar la operación .findOne()');
             }
-            else {
-                done();
-            }
+            done(err, data);
         });
     });
     mongoclient.close();
 };
-exports.update  = function(collection, query, update, done) {};
+
+exports.update  = function(collection, query, update, done) {
+    mongoclient.open(function(err, mongo) {
+        var db = mongo.db(dbname);
+        db.collection(collection).updateOne(query, update, function(err) {
+            if(err) {
+                console.log('[ERROR] No se pudo realizar la operación .update()');
+            }
+            done();
+        });
+        /*db.collection(collection, function(err, col) {
+            col.update(query, update, cb);
+        });*/
+        /*db.collection(collection).update(query, update, function (err) {
+            if(err) {
+                console.log('[ERROR] No se pudo realizar la operación .update()');
+            }
+            done();
+        });*/
+    });
+    mongoclient.close();
+};
+
 exports.delete  = function(collection, query, done) {};

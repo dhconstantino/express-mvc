@@ -29,9 +29,9 @@ var server = http.createServer(app);
 //var urlDB = 'mongodb://' + db.user() + ':' + db.pass() + '@' + db.host() + ':' + db.port() + '/' + db.name();
 
 // Access without credentials:
-var urlDB = 'mongodb://' + db.host() + ':' + db.port() + '/' + db.name();
+var uri = db.getURI();
 
-db.connect(urlDB, function(err) {
+db.connect(uri, function(err) {
     if(err) {
         debug('No fue posible conectarse con MongoDB.');
         process.exit(1);
@@ -103,11 +103,6 @@ function onListening() {
     var bind = typeof addr === 'string'
         ? 'pipe ' + addr
         : 'port ' + addr.port;
-    debug('listening on ' + bind);
-    /*debug("\n========== ExpressJS MVC ==========\n" +
-                "== Daniel HConstantino           ==\n" +
-                "== @dhconstantino                ==\n" +
-                "== Proyecto base para aplicación ==\n" +
-                "== web MVC con Express y Mongo   ==\n" +
-                "===================================\n");*/
+    debug('now listening on ' + bind);
+    console.log('Express listening on ' + bind);
 }

@@ -14,7 +14,8 @@ exports.insert  = function(name, lastName, surName, email, username, password, p
         usuario:    username,
         clave:      hash(password),
         perfil:     profile,
-        area:       area
+        area:       area,
+        estatus:     'ACTIVO'
     };
     db.insert(collection, user, cb);
 };
@@ -22,9 +23,11 @@ exports.find    = function(username, cb) {
     db.find(collection, {usuario: username}, cb);
 };
 exports.update  = function(username, updates, cb) {
-    var query = {usuario: username};
-    db.update(collection, query, updates, cb);
+    db.update(collection, {usuario: username}, {$set: updates}, cb);
+};
+exports.remove  = function (username, cb) {
+    db.update(collection, {usuario: username}, {$set: {estatus:'INACTIVO'}}, cb);
 };
 exports.login   = function(user, pass, cb){
-
+    db.find(collection, {usuario: user, clave:hash(pass)}, cb);
 };
